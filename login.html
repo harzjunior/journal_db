@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+            </ul>
+            <div class="nav-btn">
+                <input type="text" id="searchInput" placeholder="Search...">
+                <button id="adminBtn"><a href="admin.html">Admin</a></button>
+                <button id="registerBtn"><a href="register.html">Create Account</a></button>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h2>User Login</h2>
+        <form action="loginForm">
+            <div class="input-label">
+                <label for="loginUsername">Username:</label>
+                <input type="text" id="loginUsername" name="loginUsername" required>
+            </div>
+            <div class="input-label">
+                <label for="loginPassword">Password:</label>
+                <input type="password" id="loginPassword" name="loginPassword" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+
+</html>

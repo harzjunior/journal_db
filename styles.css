@@ -1,0 +1,203 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 80%;
+  margin: 8px auto;
+  background-color: #fff;
+  padding: 8px 30px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .container {
+  display: flex;
+  align-items: center;
+}
+
+.container #searchInput {
+  background-color: #3232;
+  width: 300px;
+  padding-left: 8px;
+  margin-bottom: 0px;
+}
+
+.navbar {
+  background-color: #333;
+  padding: 5px 0;
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.nav-links li a {
+  color: #000;
+  text-decoration: none;
+}
+
+.nav-links li a:hover {
+  text-decoration: underline;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 60%;
+}
+
+.nav-btn #adminBtn,
+#postBookBtn,
+#logoutBtn,
+#registerBtn,
+#loginBtn {
+  width: 17%;
+  background-color: #007bff;
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 0px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.nav-btn #adminBtn {
+  background-color: #2b2a2a;
+  font-weight: 500;
+}
+
+.nav-btn #logoutBtn {
+  background-color: #dc253e;
+  font-weight: 500;
+}
+
+.nav-btn #registerBtn {
+  background-color: #28a95e;
+  font-weight: 500;
+}
+
+.nav-btn #loginBtn {
+  background-color: #a31fa3bc;
+  font-weight: 500;
+}
+
+.nav-btn #adminBtn:hover {
+  background-color: #434343;
+}
+
+.nav-btn #postBookBtn:hover {
+  background-color: #0056b3;
+}
+
+.nav-btn #logoutBtn:hover {
+  background-color: #b53119;
+}
+
+.nav-btn #registerBtn:hover {
+  background-color: #2ecc71;
+  color: whitesmoke;
+}
+
+.nav-btn #loginBtn:hover {
+  background-color: #cb27cbbc;
+  color: whitesmoke;
+}
+
+#adminBtn a,
+#postBookBtn a,
+#registerBtn a,
+#loginBtn a {
+  text-decoration: none;
+  color: whitesmoke;
+  font-weight: 600;
+}
+
+h2 {
+  text-align: center;
+}
+
+form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 50%;
+}
+
+.input-label input {
+  width: 75%;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  padding: 10px 0;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+button {
+  width: 50%;
+  background-color: #007bff;
+  padding: 10px 0;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+p {
+  text-align: center;
+}
+
+table {
+  width: 95%;
+  border-collapse: collapse;
+  margin: 20px auto;
+}
+
+th,
+td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #424242;
+  color: #f2f2f2f2;
+}

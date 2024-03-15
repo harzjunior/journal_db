@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+            </ul>
+            <div class="nav-btn">
+                <input type="text" id="searchInput" placeholder="Search...">
+                <button id="postBookBtn">Post Book</button>
+                <button id="registerBtn"><a href="register.html">Create Account</a></button>
+                <button id="logoutBtn">Logout</button>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h2>Welcome to Admin Page</h2>
+        <p>This is the admin page content.</p>
+    </div>
+
+    <table id="userTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+</html>
