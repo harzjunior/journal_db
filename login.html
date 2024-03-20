@@ -17,11 +17,14 @@
                 <li><a href="admin.html">Admin</a></li>
             </ul>
             <input type="text" id="searchInput" placeholder="Search...">
+            <button id="logoutBtn" style="display: none;">Logout</button>
         </div>
     </nav>
+
+    <!-- Display login form -->
     <div class="container">
         <h2>User Login</h2>
-        <form action="loginForm">
+        <form id="loginForm">
             <div class="input-label">
                 <label for="loginUsername">Username:</label>
                 <input type="text" id="loginUsername" name="loginUsername" required>
@@ -30,9 +33,18 @@
                 <label for="loginPassword">Password:</label>
                 <input type="password" id="loginPassword" name="loginPassword" required>
             </div>
-            <button type="submit">Login</button>
+            <button id="loginBtn" type="submit">Login</button>
+            <div class="login-btn">
+                <!-- <span class="close" id="closeLoginModal"> -->
+                <!-- <button id="closeLoginBtn">close</button> -->
+                <!-- </span> -->
+                <!-- Add this div for displaying error messages -->
+                <div id="errorMessages" class="error-message"></div>
+            </div>
         </form>
     </div>
+    <!-- <script src="client.js"></script> -->
+    <script src="login.js"></script>
 </body>
 
 </html>

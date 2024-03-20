@@ -5,9 +5,27 @@ body {
   padding: 0;
 }
 
+.main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container-left span,
+.container-right span {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+span h5 {
+  margin: 8px 0;
+}
+
 .container {
-  width: 80%;
   margin: 8px auto;
+  width: 80%;
   background-color: #fff;
   padding: 8px 30px;
   border-radius: 5px;
@@ -147,7 +165,8 @@ form {
   width: 50%;
 }
 
-.input-label input {
+.input-label input,
+select {
   width: 75%;
 }
 
@@ -158,7 +177,8 @@ label {
 
 input[type="text"],
 input[type="password"],
-input[type="email"] {
+input[type="email"],
+select {
   padding: 10px 0;
   margin-bottom: 10px;
   border: 1px solid #ccc;
@@ -174,6 +194,19 @@ button {
   border-radius: 3px;
   color: #fff;
   cursor: pointer;
+}
+
+.login-btn button {
+  /* display: flex; */
+  /* width: 25%; */
+}
+
+.close {
+  width: 75%;
+}
+
+.close button {
+  background-color: red;
 }
 
 button:hover {

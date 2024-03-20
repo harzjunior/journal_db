@@ -17,15 +17,62 @@
             </ul>
             <div class="nav-btn">
                 <input type="text" id="searchInput" placeholder="Search...">
-                <button id="postBookBtn">Post Book</button>
+                <button id="postBookBtn">Post Journal</button>
                 <button id="registerBtn"><a href="register.html">Create Account</a></button>
                 <button id="loginBtn"><a href="login.html">Login</a></button>
+                <button id="logoutBtn" style="display: none;">Logout</button>
             </div>
         </div>
     </nav>
-    <div class="container">
-        <h2>Welcome to Home Page</h2>
-        <p>This is the home page content.</p>
+    <div class="container main">
+        <div class="container-left">
+            <span>
+                <h5>Current Date:</h5>
+                <code></code>
+            </span>
+            <span>
+                <h5>Total Number Journals:</h5>
+                <code></code>
+            </span>
+            <span>
+                <h5>Journal with least pages:</h5>
+                <code></code>
+            </span>
+            <span>
+                <h5>Journal with most pages:</h5>
+                <code></code>
+            </span>
+            <span>
+                <h5>Total Number Publishers:</h5>
+                <code></code>
+            </span>
+        </div>
+        <div class="container-center">
+            <h2>Welcome to your journal</h2>
+            <p><code>username</code>.</p>
+        </div>
+        <div class="container-right">
+            <span>
+                <h5>Journal with Least Rating:</h5>
+                <code></code>
+            </span>
+            <span>
+                <h5>Journal with Average Rating:</h5>
+                <code></code>
+            </span>
+            <span>
+                <h5>Journal with Highest Rating:</h5>
+                <code></code>
+            </span>
+            <span>
+                <h5>Earliest Published Date:</h5>
+                <code></code>
+            </span>
+            <span>
+                <h5>Latest Published Date:</h5>
+                <code></code>
+            </span>
+        </div>
     </div>
     <!-- Display the book list -->
     <table id="journalTable">
@@ -46,6 +93,7 @@
     <!-- Notification area -->
     <div id="notification"></div>
     <script src="client.js"></script>
+    <script src="search.js"></script>
 </body>
 
 </html>
