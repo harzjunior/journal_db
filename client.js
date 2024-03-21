@@ -1,10 +1,4 @@
-// const auth = require("./isAuthenticated");
-
-// const isLoggedIn = auth.isLoggedIn;
-
-// // let isLoggedIn = true;
 const isLoggedIn = localStorage.getItem("token") !== null;
-
 //================================================toggle-nav================================================
 
 function toggleButtonsVisibility(loggedIn) {
@@ -61,12 +55,15 @@ function fetchDataAndPopulateTable() {
 
       data.forEach((journal) => {
         const row = document.createElement("tr");
-        row.innerHTML = `<td>${journal.journal_id}</td><td>${
-          journal.journal_title
-        }</td><td>${journal.journal_total_page}</td>
-            <td>${journal.rating}</td><td>${journal.isbn}</td><td>${
-          new Date(journal.published_date).toISOString().split("T")[0]
-        }</td><td>${journal.publisher_id}</td>`;
+        row.innerHTML = `
+        <td>${journal.journal_id}</td>
+        <td>${journal.journal_title}</td>
+        <td>${journal.journal_total_page}</td>
+        <td>${journal.rating}</td>
+        <td>${journal.isbn}</td>
+        <td>${new Date(journal.published_date).toISOString().split("T")[0]}</td>
+        <td>${journal.publisher_id}</td>
+        `;
         tableBody.appendChild(row);
       });
 

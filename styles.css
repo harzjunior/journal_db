@@ -243,6 +243,17 @@ th {
   color: #f2f2f2f2;
 }
 
+/* CSS for alternating row colors */
+#userTable tbody tr:nth-child(even),
+#journalTable tbody tr:nth-child(even) {
+  background-color: #f2f2f2; /* Light grey background for even rows */
+}
+
+#userTable tbody tr:nth-child(odd),
+#journalTable tbody tr:nth-child(odd) {
+  background-color: #dddddd; /* Grey background for odd rows */
+}
+
 /* Success message styles */
 #successMessage {
   display: block;

@@ -1,3 +1,4 @@
-module.exports = {
-  isLoggedIn: localStorage.getItem("token") !== null,
-};
+// isAuthenticated.js
+export default function isLoggedIn() {
+  return localStorage.getItem("token") !== null;
+}
