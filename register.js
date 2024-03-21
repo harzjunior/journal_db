@@ -35,6 +35,8 @@ document
         document.getElementById("registerForm").reset();
         console.log(data); // Log the response for debugging
         alert("User registered successfully!");
+        // Redirect to the home page
+        window.location.href = "login.html";
       })
       .catch((error) =>
         console.error("Error registering user:", error.message)
