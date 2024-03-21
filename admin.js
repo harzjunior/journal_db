@@ -47,53 +47,31 @@ function fetchDataAndPopulateUserTable() {
             `;
         userTableBody.appendChild(row);
       });
-
-      // Add event listeners to handle admin actions
-      document.querySelectorAll(".approveCheckbox").forEach((checkbox) => {
-        checkbox.addEventListener("change", function () {
-          if (this.checked) {
-            approveUser(this.dataset.userId);
-          }
-        });
-      });
-
-      document.querySelectorAll(".disapproveCheckbox").forEach((checkbox) => {
-        checkbox.addEventListener("change", function () {
-          if (this.checked) {
-            disapproveUser(this.dataset.userId);
-          }
-        });
-      });
-
-      document.querySelectorAll(".suspendCheckbox").forEach((checkbox) => {
-        checkbox.addEventListener("change", function () {
-          if (this.checked) {
-            suspendUser(this.dataset.userId);
-          }
-        });
-      });
-
-      document.querySelectorAll(".deleteCheckbox").forEach((checkbox) => {
-        checkbox.addEventListener("change", function () {
-          if (this.checked) {
-            deleteUser(this.dataset.userId);
-          }
-        });
-      });
-
-      document.querySelectorAll(".resetCheckbox").forEach((checkbox) => {
-        checkbox.addEventListener("change", function () {
-          if (this.checked) {
-            resetPassword(this.dataset.userId);
-          }
-        });
-      });
     })
     .catch((error) => console.error("Error fetching users:", error));
 }
 
-// Call the function to fetch and populate user table
-fetchDataAndPopulateUserTable();
+// Add event listener to the table body to handle checkbox changes
+document
+  .querySelector("#userTable tbody")
+  .addEventListener("change", function (event) {
+    const checkbox = event.target;
+    const userId = checkbox.dataset.userId;
+
+    if (checkbox.checked) {
+      if (checkbox.classList.contains("approveCheckbox")) {
+        approveUser(userId);
+      } else if (checkbox.classList.contains("disapproveCheckbox")) {
+        disapproveUser(userId);
+      } else if (checkbox.classList.contains("suspendCheckbox")) {
+        suspendUser(userId);
+      } else if (checkbox.classList.contains("deleteCheckbox")) {
+        deleteUser(userId);
+      } else if (checkbox.classList.contains("resetCheckbox")) {
+        resetPassword(userId);
+      }
+    }
+  });
 
 // Appropriate server-side routes actions
 function approveUser(userId) {
@@ -113,7 +91,6 @@ function approveUser(userId) {
       console.log(`User with ID ${userId} approved successfully.`);
       // Log the action on the server
       logUserAction(userId, "approve");
-      fetchDataAndPopulateUserTable(); // Refresh user table after approval
     })
     .catch((error) => console.error("Error approving user:", error.message));
 }
@@ -135,7 +112,6 @@ function disapproveUser(userId) {
       console.log(`User with ID ${userId} disapproved successfully.`);
       // Log the action on the server
       logUserAction(userId, "disapprove");
-      fetchDataAndPopulateUserTable(); // Refresh user table after disapproval
     })
     .catch((error) => console.error("Error disapproving user:", error.message));
 }
@@ -157,7 +133,6 @@ function suspendUser(userId) {
       console.log(`User with ID ${userId} suspended successfully.`);
       // Log the action on the server
       logUserAction(userId, "suspend");
-      fetchDataAndPopulateUserTable(); // Refresh user table after suspension
     })
     .catch((error) => console.error("Error suspending user:", error.message));
 }
@@ -178,7 +153,6 @@ function deleteUser(userId) {
       console.log(`User with ID ${userId} deleted successfully.`);
       // Log the action on the server
       logUserAction(userId, "delete");
-      fetchDataAndPopulateUserTable(); // Refresh user table after deletion
     })
     .catch((error) => console.error("Error deleting user:", error.message));
 }
@@ -200,7 +174,6 @@ function resetPassword(userId) {
       console.log(`Password for user with ID ${userId} reset successfully.`);
       // Log the action on the server
       logUserAction(userId, "reset_password");
-      fetchDataAndPopulateUserTable(); // Refresh user table after password reset
     })
     .catch((error) =>
       console.error("Error resetting password:", error.message)
@@ -226,8 +199,17 @@ function logUserAction(userId, action) {
       console.log(
         `Action ${action} for user with ID ${userId} logged successfully.`
       );
+      // Refresh user table after the action is completed
+      fetchDataAndPopulateUserTable();
     })
     .catch((error) =>
       console.error("Error logging user action:", error.message)
     );
+}
+
+// Function to handle server errors
+function handleServerError(error, action) {
+  console.error(`Error ${action} user:`, error.message);
+  // Display error message to the user (optional)
+  //alert(`Error ${action} user: ${error.message}`);
 }
