@@ -170,9 +170,12 @@ form {
   width: 50%;
 }
 
-.input-label input,
-select {
+.input-label input {
   width: 75%;
+}
+
+select {
+  width: 78%;
 }
 
 label {
@@ -204,11 +207,6 @@ button {
   border-radius: 3px;
   color: #fff;
   cursor: pointer;
-}
-
-.login-btn button {
-  /* display: flex; */
-  /* width: 25%; */
 }
 
 .close {
