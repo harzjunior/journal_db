@@ -23,18 +23,70 @@ function fetchDataAndPopulateUserTable() {
               <td>${new Date(user.created_at).toISOString().split("T")[0]}</td>
               <td>${new Date(user.updated_at).toISOString().split("T")[0]}</td>
               <td>
-                <button onclick="approveUser(${user.user_id})">Approve</button>
-                <button onclick="disapproveUser(${
-                  user.user_id
-                })">Disapprove</button>
-                <button onclick="suspendUser(${user.user_id})">Suspend</button>
-                <button onclick="deleteUser(${user.user_id})">Delete</button>
-                <button onclick="resetPassword(${
-                  user.user_id
-                })">Reset Password</button>
+              <span>✓</span>
+              <input type="checkbox" class="approveCheckbox" data-user-id="${
+                user.user_id
+              }" />
+              <span>✗</span>
+              <input type="checkbox" class="disapproveCheckbox" data-user-id="${
+                user.user_id
+              }" />
+              <span>⏸️</span>
+              <input type="checkbox" class="suspendCheckbox" data-user-id="${
+                user.user_id
+              }" />
+              <span>🗑️</span>
+              <input type="checkbox" class="deleteCheckbox" data-user-id="${
+                user.user_id
+              }" />
+              <span>↻</span>
+              <input type="checkbox" class="resetCheckbox" data-user-id="${
+                user.user_id
+              }" />
               </td>
             `;
         userTableBody.appendChild(row);
+      });
+
+      // Add event listeners to handle admin actions
+      document.querySelectorAll(".approveCheckbox").forEach((checkbox) => {
+        checkbox.addEventListener("change", function () {
+          if (this.checked) {
+            approveUser(this.dataset.userId);
+          }
+        });
+      });
+
+      document.querySelectorAll(".disapproveCheckbox").forEach((checkbox) => {
+        checkbox.addEventListener("change", function () {
+          if (this.checked) {
+            disapproveUser(this.dataset.userId);
+          }
+        });
+      });
+
+      document.querySelectorAll(".suspendCheckbox").forEach((checkbox) => {
+        checkbox.addEventListener("change", function () {
+          if (this.checked) {
+            suspendUser(this.dataset.userId);
+          }
+        });
+      });
+
+      document.querySelectorAll(".deleteCheckbox").forEach((checkbox) => {
+        checkbox.addEventListener("change", function () {
+          if (this.checked) {
+            deleteUser(this.dataset.userId);
+          }
+        });
+      });
+
+      document.querySelectorAll(".resetCheckbox").forEach((checkbox) => {
+        checkbox.addEventListener("change", function () {
+          if (this.checked) {
+            resetPassword(this.dataset.userId);
+          }
+        });
       });
     })
     .catch((error) => console.error("Error fetching users:", error));
