@@ -1,5 +1,53 @@
-// let isLoggedIn = true;
+// const auth = require("./isAuthenticated");
+
+// const isLoggedIn = auth.isLoggedIn;
+
+// // let isLoggedIn = true;
 const isLoggedIn = localStorage.getItem("token") !== null;
+
+//================================================toggle-nav================================================
+
+function toggleButtonsVisibility(loggedIn) {
+  const loginBtn = document.getElementById("loginBtn");
+  const registerBtn = document.getElementById("registerBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (loggedIn) {
+    loginBtn.style.display = "none";
+    registerBtn.style.display = "none";
+    logoutBtn.style.display = "block";
+  } else {
+    loginBtn.style.display = "block";
+    registerBtn.style.display = "block";
+    logoutBtn.style.display = "none";
+  }
+}
+
+// Set initial visibility of buttons
+toggleButtonsVisibility(isLoggedIn);
+
+if (isLoggedIn) {
+  document.getElementById("authenticatedContent").style.display = "block";
+}
+
+// Show add journal input fields when "Post journal" button is clicked
+document
+  .getElementById("postJournalBtn")
+  .addEventListener("click", function () {
+    // Check if the user is logged in before showing the form
+    if (isLoggedIn) {
+      // Toggle the visibility of the add book form
+      const addJournalForm = document.getElementById("addJournalForm");
+      addJournalForm.style.display =
+        addJournalForm.style.display === "none" ? "block" : "none";
+    } else {
+      // If the user is not logged in, you can redirect to the login page or perform other actions
+      document.getElementById("postJournalBtn").style.display = "none";
+      alert("Please log in or create an account to post a journal.");
+      // Alternatively, you can redirect to the login page
+      // window.location.href = "/login"; // Replace "/login" with your login page URL
+    }
+  });
 
 //================================================journals================================================
 
@@ -101,3 +149,85 @@ function fetchDataAndPopulateTable() {
 if (isLoggedIn) {
   fetchDataAndPopulateTable();
 }
+
+//===============================================logout=================================================
+
+// Logout functionality
+document.getElementById("logoutBtn").addEventListener("click", function () {
+  // Clear the token from localStorage
+  localStorage.removeItem("token");
+
+  // Set visibility of buttons after logout
+  toggleButtonsVisibility(false);
+
+  // Reload the page to fetch updated data and show book input fields
+  location.reload(true);
+});
+
+//===============================================logout=================================================
+
+// Handle form submission
+document
+  .getElementById("addJournalForm")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    // Check if the user is logged in before allowing book addition
+    if (!isLoggedIn) {
+      alert("Please log in or create an account to add a book.");
+      return;
+    }
+
+    const title = document.getElementById("title").value;
+    const totalPages = document.getElementById("totalPages").value;
+    const rating = document.getElementById("rating").value;
+    const isbn = document.getElementById("isbn").value;
+    const publishedDate = document.getElementById("publishedDate").value;
+    const publisher = document.getElementById("publisher").value;
+
+    // Send a POST request to add the new book
+    fetch("/journals", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        title,
+        totalPages,
+        rating,
+        isbn,
+        publishedDate,
+        publisher,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            `Server error: ${response.status} ${response.statusText}`
+          );
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Clear the form fields
+        document.getElementById("addJournalForm").reset();
+
+        // remove success notification message
+        const successMessage = document.getElementById("successMessage");
+        successMessage.classList.remove("hidden");
+
+        successMessage.style.display = "block";
+
+        // Refresh the book list
+        fetchDataAndPopulateTable();
+
+        // Hide success notification message after 2 seconds
+        setTimeout(() => {
+          successMessage.style.display = "none";
+        }, 2000);
+      })
+      .catch((error) =>
+        console.error("Error adding new journal:", error.message)
+      );
+  });

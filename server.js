@@ -103,8 +103,6 @@ app.post("/register", (req, res) => {
 
 // this route to handle the user login
 app.post("/login", (req, res) => {
-  console.log("Login request received");
-
   const { loginUsername, loginPassword } = req.body;
 
   // Retrieve user from the users table based on the provided username
@@ -138,6 +136,40 @@ app.post("/login", (req, res) => {
       }
     }
   });
+});
+
+//===============================================post Journal=================================================
+
+// this route to handle the POST request for adding a new journal
+app.post("/journals", (req, res) => {
+
+  const { title, totalPages, rating, isbn, publishedDate, publisher } =
+    req.body;
+  const query =
+    "INSERT INTO journals (journal_title, journal_total_page, rating, isbn, published_date, publisher_id) VALUES (?, ?, ?, ?, ?, ?)";
+
+  // Execute the query
+  db.query(
+    query,
+    [title, totalPages, rating, isbn, publishedDate, publisher],
+    (error, results) => {
+      if (error) {
+        console.error("Error adding new journal to MySQL:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+      } else {
+        // Retrieve the updated journal list
+        const selectQuery = "SELECT * FROM journals";
+        db.query(selectQuery, (selectError, selectResults) => {
+          if (selectError) {
+            console.error("Error fetching data from MySQL:", selectError);
+            res.status(500).json({ error: "Internal Server Error" });
+          } else {
+            res.json(selectResults);
+          }
+        });
+      }
+    }
+  );
 });
 
 //===============================================users=================================================

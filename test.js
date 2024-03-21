@@ -1,4 +1,4 @@
-require("dotenv").config(); // Load environment variables from .env file
+require("dotenv").config();
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -6,10 +6,14 @@ const mysql = require("mysql");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const config = require("./config");
 
 // Create Express app
 const app = express();
-const port = 3000;
+
+// const port = process.env.PORT || 3000; // Default to port 3000 if PORT environment variable is not set
+
+const port = config.port;
 
 // Middleware
 app.use(cors());
@@ -75,15 +79,8 @@ app.post("/register", (req, res) => {
 
   const { registerUsername, registerPassword, registerEmail, registerRole } =
     req.body;
-  console.log("Received data:", {
-    registerUsername,
-    registerPassword,
-    registerEmail,
-    registerRole,
-  });
 
   const hashedPassword = bcrypt.hashSync(registerPassword, 10); // Hash the password
-  console.log("Hashed password:", hashedPassword);
 
   // Insert user into the users table
   const insertUserQuery =
@@ -106,10 +103,7 @@ app.post("/register", (req, res) => {
 
 // this route to handle the user login
 app.post("/login", (req, res) => {
-  console.log("Login request received");
-
   const { loginUsername, loginPassword } = req.body;
-  console.log("Received login data:", { loginUsername, loginPassword });
 
   // Retrieve user from the users table based on the provided username
   const selectUserQuery = "SELECT * FROM users WHERE username = ? LIMIT 1";
@@ -186,5 +180,5 @@ app.post("/log-user-action", (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`Server is running`);
 });
