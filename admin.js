@@ -57,8 +57,18 @@ document
   .addEventListener("change", function (event) {
     const checkbox = event.target;
     const userId = checkbox.dataset.userId;
+    const checkboxesInRow = checkbox.parentElement.querySelectorAll(
+      'input[type="checkbox"]'
+    );
 
     if (checkbox.checked) {
+      checkboxesInRow.forEach((cb) => {
+        if (cb !== checkbox) {
+          cb.disabled = true;
+        }
+      });
+
+      // Perform the corresponding action
       if (checkbox.classList.contains("approveCheckbox")) {
         approveUser(userId);
       } else if (checkbox.classList.contains("disapproveCheckbox")) {
@@ -70,6 +80,11 @@ document
       } else if (checkbox.classList.contains("resetCheckbox")) {
         resetPassword(userId);
       }
+    } else {
+      // Enable all checkboxes in the row if the clicked checkbox is unchecked
+      checkboxesInRow.forEach((cb) => {
+        cb.disabled = false;
+      });
     }
   });
 
