@@ -19,7 +19,7 @@ function fetchDataAndPopulateUserTable() {
               <td>${user.user_id}</td>
               <td>${user.username}</td>
               <td>${user.email}</td>
-              <td>${user.role}</td>
+              <td>${user.role_id}</td>
               <td>${new Date(user.created_at).toISOString().split("T")[0]}</td>
               <td>${new Date(user.updated_at).toISOString().split("T")[0]}</td>
               <td>

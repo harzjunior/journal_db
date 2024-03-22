@@ -50,7 +50,7 @@
             </div>
             <div class="container-center">
                 <h2>Welcome to your journal</h2>
-                <p><code>username</code>.</p>
+                <p><code id="usernameDisplay">username</code>.</p>
             </div>
             <div class="container-right">
                 <span>
@@ -133,6 +133,12 @@
     <div id="notification"></div>
     <script src="client.js" type="module"></script>
     <script src="search.js"></script>
+    <script>
+        // Retrieve username from local storage
+        const username = localStorage.getItem("username");
+        // Update HTML content with the username
+        document.getElementById("usernameDisplay").textContent = username ? username : 'username';
+    </script>
 </body>
 
 </html>

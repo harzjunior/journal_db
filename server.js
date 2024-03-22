@@ -11,8 +11,6 @@ const config = require("./config");
 // Create Express app
 const app = express();
 
-// const port = process.env.PORT || 3000; // Default to port 3000 if PORT environment variable is not set
-
 const port = config.port;
 
 // Middleware
@@ -54,10 +52,22 @@ const isAuthenticated = (req, res, next) => {
   }
 };
 
+// Middleware to check if the user is an admin
+const isAdmin = (req, res, next) => {
+  // Check if the user is authenticated
+  if (req.user && req.user.role === "Admin") {
+    // User is an admin, proceed to the next middleware/route
+    next();
+  } else {
+    // User is not an admin, send a 403 Forbidden status
+    res.status(403).send("Access Forbidden: Admin privileges required");
+  }
+};
 //================================================journals================================================
 
 // Apply the middleware to the routes that require authentication
 app.use("/journals", isAuthenticated);
+// app.use("/journals", verifyToken);
 
 // Endpoint to fetch journals data
 app.get("/journals", (req, res) => {
@@ -69,6 +79,58 @@ app.get("/journals", (req, res) => {
       return;
     }
     res.json(result); // Send the result as JSON response
+  });
+});
+
+// Apply the isAdmin middleware to the routes that require admin privileges
+app.post("/approve-user/:userId", isAdmin, (req, res) => {
+  // Handle approving user logic here
+  const userId = req.params.userId; // Extract userId from request parameters
+
+  // An SQL query to update the user's status in the database
+  const query = "UPDATE users SET status = 'approved' WHERE user_id = ?";
+  db.query(query, [userId], (error, results) => {
+    if (error) {
+      console.error("Error approving user:", error);
+      res.status(500).send("Internal Server Error");
+    } else {
+      console.log(`User with ID ${userId} approved successfully.`);
+      // Log the action in the user_action table
+      const logQuery =
+        "INSERT INTO user_action (user_id, action, timestamp) VALUES (?, ?, NOW())";
+      db.query(logQuery, [userId, "approve"], (logError, logResults) => {
+        if (logError) {
+          console.error("Error logging user action:", logError);
+          // Consider handling the error in a better way, e.g., retrying or logging to a file
+        }
+      });
+      res.status(200).send("User approved successfully");
+    }
+  });
+});
+
+app.post("/disapprove-user/:userId", isAdmin, (req, res) => {
+  const userId = req.params.userId; // Extract userId from request parameters
+
+  // An SQL query to update the user's status in the database
+  const query = "UPDATE users SET status = 'disapproved' WHERE user_id = ?";
+  db.query(query, [userId], (error, results) => {
+    if (error) {
+      console.error("Error disapproving user:", error);
+      res.status(500).send("Internal Server Error");
+    } else {
+      console.log(`User with ID ${userId} disapproved successfully.`);
+      // Log the action in the user_action table
+      const logQuery =
+        "INSERT INTO user_action (user_id, action, timestamp) VALUES (?, ?, NOW())";
+      db.query(logQuery, [userId, "disapprove"], (logError, logResults) => {
+        if (logError) {
+          console.error("Error logging user action:", logError);
+          // Consider handling the error in a better way, e.g., retrying or logging to a file
+        }
+      });
+      res.status(200).send("User disapproved successfully");
+    }
   });
 });
 
@@ -125,7 +187,8 @@ app.post("/login", (req, res) => {
           const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY, {
             expiresIn: "1h", // You can adjust the expiration time
           });
-          res.json({ token });
+          // res.json({ token });
+          res.json({ token, username: user.username }); // Send token and username to the client
         } else {
           // Password is incorrect
           res.status(401).json({ error: "Invalid credentials" });
@@ -142,7 +205,6 @@ app.post("/login", (req, res) => {
 
 // this route to handle the POST request for adding a new journal
 app.post("/journals", (req, res) => {
-
   const { title, totalPages, rating, isbn, publishedDate, publisher } =
     req.body;
   const query =

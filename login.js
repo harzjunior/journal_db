@@ -43,8 +43,11 @@ document
       .then((data) => {
         // Assuming the server sends a token upon successful login
         const token = data.token;
-        // Store the token securely (e.g., in localStorage) for future authenticated requests
+        const username = data.username;
+
+        // Store token and username in local storage
         localStorage.setItem("token", token);
+        localStorage.setItem("username", username);
 
         // Optional: Redirect to a different page or update UI for authenticated user
         console.log("User logged in successfully!");
@@ -67,4 +70,3 @@ document
       })
       .catch((error) => console.error("Error logging in:", error.message));
   });
-

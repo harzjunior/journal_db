@@ -47,7 +47,13 @@ document
 
 // Fetch data from the server and populate the table
 function fetchDataAndPopulateTable() {
-  fetch("/journals")
+  fetch("/journals", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`, // Include token
+    },
+  })
     .then((response) => response.json())
     .then((data) => {
       const tableBody = document.querySelector("#journalTable tbody");
@@ -123,6 +129,8 @@ function fetchDataAndPopulateTable() {
       const latestPublishedDateElement = document.querySelectorAll(
         ".container-right code"
       )[4];
+      // Get the username from localStorage
+      // const username = localStorage.getItem("username");
 
       // Update container with calculated data
       currentDateElement.textContent = new Date().toISOString().split("T")[0];
@@ -138,6 +146,8 @@ function fetchDataAndPopulateTable() {
         journalWithHighestRating.toFixed(1);
       earliestPublishedDateElement.textContent = earliestPublishedDate;
       latestPublishedDateElement.textContent = latestPublishedDate;
+      // Update the HTML to display the username
+      // document.getElementById("username").textContent = username;
     })
     .catch((error) => console.error("Error fetching data:", error));
 }
@@ -151,17 +161,21 @@ if (isLoggedIn) {
 
 // Logout functionality
 document.getElementById("logoutBtn").addEventListener("click", function () {
-  // Clear the token from localStorage
+  // Clear token and username from local storage
   localStorage.removeItem("token");
+  localStorage.removeItem("username");
 
   // Set visibility of buttons after logout
   toggleButtonsVisibility(false);
 
+  // Redirect to login page or perform other actions as needed
+  window.location.href = "index.html";
+
   // Reload the page to fetch updated data and show book input fields
-  location.reload(true);
+  // location.reload(true);
 });
 
-//===============================================logout=================================================
+//===============================================submit=================================================
 
 // Handle form submission
 document
