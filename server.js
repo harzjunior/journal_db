@@ -137,8 +137,6 @@ app.post("/disapprove-user/:userId", isAdmin, (req, res) => {
 //===============================================register=================================================
 // this route to handle the user registration
 app.post("/register", (req, res) => {
-  console.log("Registration request received");
-
   const { registerUsername, registerPassword, registerEmail, registerRole } =
     req.body;
 
