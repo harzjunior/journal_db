@@ -270,3 +270,8 @@ th {
   border-radius: 5px;
   transition: opacity 0.5s ease-in-out;
 }
+
+.error-message {
+  color: #b53119;
+  padding: 10px;
+}

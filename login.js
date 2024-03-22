@@ -29,7 +29,10 @@ document
         if (!response.ok) {
           // Display error message
           errorMessages.innerHTML = "Invalid username or password.";
-
+          // Hide success notification message after 2 seconds
+          setTimeout(() => {
+            errorMessages.innerHTML = "";
+          }, 2200);
           // Add a class to the input fields when authentication fails
           loginUsernameInput.classList.add("error");
           loginPasswordInput.classList.add("error");
